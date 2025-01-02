@@ -59,7 +59,7 @@ Below are the dependencies used by the `LessonActivityContent` component:
 ---
 
 ## Code Overview
-```mermaid
+``` #mermaid
 LessonActivityContent
 ├── useEffect 1: Fetch course and lesson data
 ├── useEffect 2: Update breadcrumbs and sidebar
