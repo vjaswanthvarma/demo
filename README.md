@@ -59,19 +59,19 @@ Below are the dependencies used by the `LessonActivityContent` component:
 ---
 
 ## Code Overview
-``` #mermaid
+```mermaid
 flowchart TD
     A[Component Mount] --> B{Course Exists?}
     B -->|No| C[Fetch Course Data]
     B -->|Yes| D{Entity Exists?}
     
-    C --> E[Update Redux Store]
+    C --> E[Update Redux Store with Course]
     E --> D
     
     D -->|No| F[Fetch Lesson Data]
     D -->|Yes| G[Setup Side Effects]
     
-    F --> H[Update Redux Store]
+    F --> H[Update Redux Store with Lesson]
     H --> G
     
     G --> I[Set Sidebar to 'activity']
