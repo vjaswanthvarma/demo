@@ -60,40 +60,31 @@ Below are the dependencies used by the `LessonActivityContent` component:
 
 ## Code Overview
 ``` #mermaid
-LessonActivityContent
-├── useEffect 1: Fetch course and lesson data
-├── useEffect 2: Update breadcrumbs and sidebar
-├── Conditional Rendering:
-│   ├── Loading spinner if data is being fetched
-│   └── Main UI (ProgressBar, Question, Navigation)
-└── Cleanup: Reset sidebar when component unmounts
-graph TD
-    A[LessonActivityContent] -->|Dispatches| B[setSidebar("activity")]
-    A -->|Fetches| C[Course Data]
-    A -->|Fetches| D[Lesson Data]
-    C -->|API Call| E[getCourseById]
-    D -->|API Call| F[getLessonById]
-    E -->|Updates| G[Redux: setCourse]
-    F -->|Updates| H[Redux: setLesson]
-
-    A -->|Checks| I[Status: "idle" or "loading"]
-    I -->|Renders| J[Loading Component]
-    I -->|Else| K[Render Main Content]
-
-    K -->|Renders| L[ProgressBar]
-    K -->|Renders| M[Question Component]
-    K -->|Conditional Render| N[ActivityNavigation]
-
-    subgraph UI Rendering
-        B -->|Updates| O[Global Sidebar State]
-        L -->|Updates| P[Progress Bar UI]
-        M -->|Displays| Q[Lesson Content]
-        N -->|Navigates| R[Next/Previous Activities]
-    end
-
-    subgraph Error Handling
-        A -->|Handles Errors| S[NotFound Component]
-    end
-
-
-   
+flowchart TD
+    A[Component Mount] --> B{Course Exists?}
+    B -->|No| C[Fetch Course Data]
+    B -->|Yes| D{Entity Exists?}
+    
+    C --> E[Update Redux Store]
+    E --> D
+    
+    D -->|No| F[Fetch Lesson Data]
+    D -->|Yes| G[Setup Side Effects]
+    
+    F --> H[Update Redux Store]
+    H --> G
+    
+    G --> I[Set Sidebar to 'activity']
+    G --> J[Update Breadcrumbs]
+    
+    K[Component Render] --> L{Check Status}
+    L -->|idle/loading| M[Show Loading]
+    L -->|ready| N[Render Content]
+    
+    N --> O[Header with Progress]
+    N --> P[Question Component]
+    N --> Q{Is Quiz?}
+    Q -->|No| R[Activity Navigation]
+    Q -->|Yes| S[No Navigation]
+    
+    T[Component Unmount] --> U[Reset Sidebar to 'global']
