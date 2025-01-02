@@ -1,32 +1,55 @@
 # LessonActivityContent Component
 
-The `LessonActivityContent` component is part of an educational platform. It handles the rendering of lesson content for students, including progress tracking, lesson details, navigation, and dynamic data fetching.
+The `LessonActivityContent` component is a React functional component that serves as a core part of an educational platform. It handles the display of lesson content, progress tracking, and activity navigation for users.
 
-## Features
-- Fetches course and lesson data from the API.
-- Displays the current lesson's content and activity.
-- Tracks and displays course progress using a progress bar.
-- Provides navigation for non-quiz activities.
-- Dynamically updates breadcrumbs for better navigation context.
+---
+
+## Description
+This component dynamically fetches and renders lesson data for a course. It integrates with Redux for state management and React Router for routing. It provides:
+- A progress bar showing course completion.
+- A detailed lesson content display.
+- Navigation for non-quiz activities.
+
+---
+
+## Props
+This component does not directly accept props. Instead, it relies on Redux state and React Router parameters.
+
+| Prop           | Description                     | Type    |
+|----------------|---------------------------------|---------|
+| N/A            | This component uses context/state hooks instead of props. | N/A     |
+
+---
+
+## Components Used
+The `LessonActivityContent` component uses the following components:
+
+| Component              | Description                                |
+|------------------------|--------------------------------------------|
+| `ProgressBar`          | Displays the user's progress in the course. |
+| `Question`             | Renders the main lesson content for the current activity. |
+| `ActivityNavigation`   | Provides navigation controls for non-quiz activities. |
+| `Loading`              | Displays a loading indicator while data is being fetched. |
+| `NotFound`             | Displays an error message if course or lesson data cannot be loaded. |
+
+---
 
 ## Dependencies
-The component relies on several third-party libraries and internal modules:
+This component uses the following dependencies:
 
-### External Libraries
-- **React**: For component-based architecture and hooks.
-- **Redux**: For state management (e.g., `useAppDispatch`, `useAppSelector`).
-- **React Router**: For routing (`useParams`).
-- **katex**: For rendering mathematical formulas (CSS file included).
-- **UI Components**: Custom shared components such as `ProgressBar`, `Loading`, and `NotFound`.
+- **React**: For component structure and lifecycle methods.
+- **Redux**: For global state management (`useAppDispatch`, `useAppSelector`).
+- **React Router**: For URL-based routing and parameter extraction (`useParams`).
+- **Tailwind CSS**: For responsive and dark-mode-friendly styling.
+- **Custom Hooks**:
+  - `useSessionData`: Retrieves session-specific information.
+  - `useBreadCrumbContext`: Updates the breadcrumb navigation.
 
-### Internal Modules
-- **Hooks**: Custom hooks like `useSessionData` and `useBreadCrumbContext`.
-- **Redux Slices**: Global and session state management slices (`setSidebar`, `setBreadcrumb`, etc.).
-- **API Calls**: Utility functions to fetch course and lesson data (`getCourseById`, `getLessonById`).
-- **Components**: Nested components like `Question` and `ActivityNavigation`.
+---
 
-## Setup
-1. **Install Dependencies**  
-   Ensure all required libraries are installed:
-   ```bash
-   npm install
+## Example Usage
+Include this component in your app's routing structure:
+```jsx
+<Route path="/courses/:courseId/chapters/:chapterId" element={<LessonActivityContent />} />
+
+   
